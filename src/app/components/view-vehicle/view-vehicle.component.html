@@ -1,46 +1,43 @@
 <mat-card class="container">
   <form [formGroup]="vehicleForm" (ngSubmit)="onUpdateVehicle()">
     <mat-card-content>
-
-      <h3>Detalhes do Veículo</h3>
-
-
+      <h3>detalhes do veículo</h3>
 
       <div class="form-vehicle" fxLayout="row" fxLayout.lt-md="column" fxFlexFill>
 
         <mat-form-field appearance="outline">
-          <mat-label>Placa</mat-label>
+          <mat-label>placa</mat-label>
           <input matInput formControlName="plate" [disabled]="!isEditing" maxlength="7" required />
           <mat-error *ngIf="vehicleForm.controls['plate'].hasError('required')">obrigatório</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Chassi</mat-label>
+          <mat-label>chassi</mat-label>
           <input matInput formControlName="chassis" [disabled]="!isEditing" maxlength="17" required />
           <mat-error *ngIf="vehicleForm.controls['chassis'].hasError('required')"> obrigatório. </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Renavam</mat-label>
+          <mat-label>renavam</mat-label>
           <input matInput formControlName="renavam" [disabled]="!isEditing" required maxlength="11"
             [mask]="'00000000000'" />
           <mat-error *ngIf="vehicleForm.controls['renavam'].hasError('required')">obrigatório</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Modelo</mat-label>
+          <mat-label>modelo</mat-label>
           <input matInput formControlName="model" [disabled]="!isEditing" required maxlength="16" />
           <mat-error *ngIf="vehicleForm.controls['model'].hasError('required')">obrigatório</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Marca</mat-label>
+          <mat-label>marca</mat-label>
           <input matInput formControlName="brand" [disabled]="!isEditing" required maxlength="16" />
           <mat-error *ngIf="vehicleForm.controls['brand'].hasError('required')">obrigatório</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Ano</mat-label>
+          <mat-label>ano</mat-label>
           <input matInput type="text" formControlName="year" [disabled]="!isEditing" required maxlength="4"
             [mask]="'0000'" />
           <mat-error *ngIf="vehicleForm.controls['year'].hasError('required')">obrigatório</mat-error>
