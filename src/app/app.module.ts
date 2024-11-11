@@ -27,7 +27,6 @@ import { RegisterVehicleComponent } from './components/register-vehicle/register
 import { VehiclesComponent } from './components/vehicles/vehicles.component';
 import { ViewVehicleComponent } from './components/view-vehicle/view-vehicle.component';
 import { DeleteDialogComponent } from './shared/components/delete-dialog/delete-dialog.component';
-import { VehicleInputsComponent } from './shared/components/vehicle-inputs/vehicle-inputs.component';
 
 @NgModule({
   declarations: [
@@ -35,8 +34,7 @@ import { VehicleInputsComponent } from './shared/components/vehicle-inputs/vehic
     RegisterVehicleComponent,
     VehiclesComponent,
     ViewVehicleComponent,
-    DeleteDialogComponent,
-    VehicleInputsComponent
+    DeleteDialogComponent
   ],
   imports: [
     BrowserModule,
