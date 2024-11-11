@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Vehicle } from '../../models/vehicle.model';
 import { VehicleService } from '../../services/vehicle.service';
 import { SnackMessageService } from '../../shared/services/snack-message.service';
-import { Vehicle } from '../../models/vehicle.model';
 
 @Component({
   selector: 'app-register-vehicle',
@@ -10,6 +10,8 @@ import { Vehicle } from '../../models/vehicle.model';
   styleUrls: ['./register-vehicle.component.scss']
 })
 export class RegisterVehicleComponent {
+
+  @Output() registerCompleted = new EventEmitter<void>();
 
   vehicleForm: FormGroup;
   yearToday = new Date().getFullYear();
@@ -49,20 +51,9 @@ export class RegisterVehicleComponent {
         .finally(() => {
           this.loadingRegister = false
           this.vehicleForm.reset();
-          this.resetFormState();
+          this.registerCompleted.emit();
         });
     }
-  }
-
-  private resetFormState(): void {
-    Object.keys(this.vehicleForm.controls).forEach(key => {
-      const control = this.vehicleForm.get(key);
-      if (control) {
-        control.markAsPristine();
-        control.markAsUntouched();
-        control.setErrors(null);
-      }
-    });
   }
 
 }

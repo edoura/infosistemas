@@ -12,6 +12,7 @@ import { SnackMessageService } from 'src/app/shared/services/snack-message.servi
 export class VehiclesComponent implements OnInit {
   vehicles: Vehicle[] = [];
   loadingVehicles: boolean = false;
+  viewRegisterVehicle: boolean = false;
 
   constructor(
     private readonly vehicleService: VehicleService,
@@ -36,6 +37,10 @@ export class VehiclesComponent implements OnInit {
         this.loadingVehicles = false
       }
     });
+  }
+
+  toggleRegisterVehicle() {
+    this.viewRegisterVehicle = !this.viewRegisterVehicle;
   }
 
   viewVehicle(id: string | undefined) {
