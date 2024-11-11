@@ -1,11 +1,15 @@
+h3 {
+  margin-top: 0.2em;
+}
+
 .form-vehicle {
   justify-content: space-between;
 
-  input{
+  input {
     text-transform: uppercase;
   }
 
-  mat-error{
+  mat-error {
     font-size: 12px;
   }
 
