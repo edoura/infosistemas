@@ -1,0 +1,65 @@
+<mat-card class="container">
+  <form [formGroup]="vehicleForm" (ngSubmit)="onUpdateVehicle()">
+    <mat-card-content>
+
+      <h3>Detalhes do Veículo</h3>
+
+
+
+      <div class="form-vehicle" fxLayout="row" fxLayout.lt-md="column" fxFlexFill>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Placa</mat-label>
+          <input matInput formControlName="plate" [disabled]="!isEditing" maxlength="7" required />
+          <mat-error *ngIf="vehicleForm.controls['plate'].hasError('required')">obrigatório</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Chassi</mat-label>
+          <input matInput formControlName="chassis" [disabled]="!isEditing" maxlength="17" required />
+          <mat-error *ngIf="vehicleForm.controls['chassis'].hasError('required')"> obrigatório. </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Renavam</mat-label>
+          <input matInput formControlName="renavam" [disabled]="!isEditing" required maxlength="11"
+            [mask]="'00000000000'" />
+          <mat-error *ngIf="vehicleForm.controls['renavam'].hasError('required')">obrigatório</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Modelo</mat-label>
+          <input matInput formControlName="model" [disabled]="!isEditing" required maxlength="16" />
+          <mat-error *ngIf="vehicleForm.controls['model'].hasError('required')">obrigatório</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Marca</mat-label>
+          <input matInput formControlName="brand" [disabled]="!isEditing" required maxlength="16" />
+          <mat-error *ngIf="vehicleForm.controls['brand'].hasError('required')">obrigatório</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Ano</mat-label>
+          <input matInput type="text" formControlName="year" [disabled]="!isEditing" required maxlength="4"
+            [mask]="'0000'" />
+          <mat-error *ngIf="vehicleForm.controls['year'].hasError('required')">obrigatório</mat-error>
+          <mat-error *ngIf="vehicleForm.controls['year'].hasError('min')">deve ser maior que 1900</mat-error>
+          <mat-error *ngIf="vehicleForm.controls['year'].hasError('max')">deve ser menor que {{ yearToday }}</mat-error>
+        </mat-form-field>
+
+      </div>
+
+      <div class="actions">
+        <button mat-raised-button *ngIf="!isEditing" (click)="goToList()">voltar</button>
+        <button mat-raised-button color="primary" *ngIf="!isEditing" (click)="enableEditing()">editar</button>
+        <button mat-raised-button color="accent" *ngIf="isEditing" type="submit"
+          [disabled]="vehicleForm.invalid">salvar</button>
+        <button mat-raised-button *ngIf="isEditing" (click)="cancelEditing()">cancelar</button>
+        <button mat-raised-button color="warn" (click)="onDeleteVehicle()">excluir</button>
+      </div>
+    </mat-card-content>
+
+
+  </form>
+</mat-card>
