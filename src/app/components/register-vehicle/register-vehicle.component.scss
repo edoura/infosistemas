@@ -1,0 +1,15 @@
+.form-vehicle {
+  justify-content: space-between;
+
+  input{
+    text-transform: uppercase;
+  }
+
+  mat-error{
+    font-size: 12px;
+  }
+
+  button {
+    height: 56px;
+  }
+}
