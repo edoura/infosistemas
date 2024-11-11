@@ -1,11 +1,15 @@
-h3{
-  margin-top: .2em;
+h3 {
+  margin-top: 0.2em;
 }
 
 .form-vehicle {
   justify-content: space-between;
 
-  mat-error{
+  input {
+    text-transform: uppercase;
+  }
+
+  mat-error {
     font-size: 12px;
   }
 }
@@ -14,7 +18,7 @@ h3{
   text-align: right;
   margin-top: 8px;
 
-  button:not(:last-of-type){
+  button:not(:last-of-type) {
     margin-right: 6px;
   }
 }

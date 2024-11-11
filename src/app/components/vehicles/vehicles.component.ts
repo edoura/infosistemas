@@ -32,7 +32,7 @@ export class VehiclesComponent implements OnInit {
         this.loadingVehicles = false
       },
       error: (err) => {
-        this.snackMessageService.error('Erro ao carregar veículos');
+        this.snackMessageService.error('erro ao carregar veículos');
         this.loadingVehicles = false
       }
     });

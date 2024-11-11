@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Vehicle } from 'src/app/models/vehicle.model';
 import { VehicleService } from 'src/app/services/vehicle.service';
 import { DeleteDialogComponent } from 'src/app/shared/components/delete-dialog/delete-dialog.component';
 import { SnackMessageService } from 'src/app/shared/services/snack-message.service';
@@ -49,7 +50,7 @@ export class ViewVehicleComponent implements OnInit {
         this.vehicleForm.disable();
       },
       error: () => {
-        this.snackMessageService.error('Erro ao carregar o veículo.');
+        this.snackMessageService.error('erro ao carregar o veículo.');
         this.router.navigate(['/vehicles']);
       }
     });
@@ -67,13 +68,21 @@ export class ViewVehicleComponent implements OnInit {
 
   onUpdateVehicle(): void {
     if (this.vehicleForm.valid && this.vehicleId) {
-      const updatedData = this.vehicleForm.value;
+
+      const updatedData: Vehicle = {
+        ...this.vehicleForm.value,
+        plate: this.vehicleForm.value.plate.toUpperCase(),
+        chassis: this.vehicleForm.value.chassis.toUpperCase(),
+        model: this.vehicleForm.value.model.toUpperCase(),
+        brand: this.vehicleForm.value.brand.toUpperCase()
+      };
+
       this.vehicleService.updateVehicle(this.vehicleId, updatedData)
         .then(() => {
-          this.snackMessageService.alert('Veículo atualizado com sucesso!');
+          this.snackMessageService.alert('veículo atualizado com sucesso!');
           this.isEditing = false;
         })
-        .catch(() => this.snackMessageService.alert('Erro ao atualizar o veículo.'))
+        .catch(() => this.snackMessageService.alert('erro ao atualizar o veículo.'))
         .finally(() => this.vehicleForm.disable());
     }
   }
@@ -81,8 +90,8 @@ export class ViewVehicleComponent implements OnInit {
   onDeleteVehicle(): void {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       data: {
-        title: 'Excluir Veículo',
-        message: 'Tem certeza que deseja excluir este veículo?'
+        title: 'excluir Veículo',
+        message: 'tem certeza que deseja excluir este veículo?'
       }
     });
 
@@ -90,10 +99,10 @@ export class ViewVehicleComponent implements OnInit {
       if (result && this.vehicleId) {
         this.vehicleService.deleteVehicle(this.vehicleId)
           .then(() => {
-            this.snackMessageService.alert('Veículo excluído com sucesso!');
+            this.snackMessageService.alert('veículo excluído com sucesso!');
             this.router.navigate(['/vehicles']);
           })
-          .catch(() => this.snackMessageService.error('Erro ao excluir o veículo.'));
+          .catch(() => this.snackMessageService.error('erro ao excluir o veículo.'));
       }
     });
   }

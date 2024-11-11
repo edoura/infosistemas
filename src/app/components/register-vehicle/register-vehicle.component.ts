@@ -44,8 +44,8 @@ export class RegisterVehicleComponent {
       };
 
       this.vehicleService.addVehicle(vehicle)
-        .then(() => this.snackMessageService.alert('Veículo cadastrado com sucesso!'))
-        .catch(() => this.snackMessageService.error('Erro ao cadastrar veículo'))
+        .then(() => this.snackMessageService.alert('veículo cadastrado com sucesso!'))
+        .catch(() => this.snackMessageService.error('erro ao cadastrar veículo'))
         .finally(() => {
           this.loadingRegister = false
           this.vehicleForm.reset();
