@@ -1,19 +1,82 @@
-/**
- * Import function triggers from their respective submodules:
- *
- * const {onCall} = require("firebase-functions/v2/https");
- * const {onDocumentWritten} = require("firebase-functions/v2/firestore");
- *
- * See a full list of supported triggers at https://firebase.google.com/docs/functions
- */
+import {onRequest} from "firebase-functions/v1/https";
+import admin from "firebase-admin";
+import fs from "fs";
+import path from "path";
+import cors from "cors";
 
-const {onRequest} = require("firebase-functions/v2/https");
-const logger = require("firebase-functions/logger");
+const serviceAccount = JSON.parse(
+    fs.readFileSync(path.resolve("./serviceAccountKey.json"), "utf8"));
 
-// Create and deploy your first functions
-// https://firebase.google.com/docs/functions/get-started
+admin.initializeApp({credential: admin.credential.cert(serviceAccount)});
 
-// exports.helloWorld = onRequest((request, response) => {
-//   logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
+const db = admin.firestore();
+
+const corsHandler = cors({origin: true});
+
+export const createVehicle = onRequest(async (req, res) => {
+  corsHandler(req, res, async () => {
+    try {
+      const {plate, chassis, renavam, model, brand, year} = req.body;
+      const docRef = await db.collection("vehicles").add({
+        plate, chassis, renavam, model, brand, year});
+      res.status(201)
+          .json({id: docRef.id, plate, chassis, renavam, model, brand, year});
+    } catch (error) {
+      res.status(500).send(error.message);
+    }
+  });
+});
+
+export const getVehicles = onRequest(async (req, res) => {
+  corsHandler(req, res, async () => {
+    try {
+      const snapshot = await db.collection("vehicles").get();
+      const vehicles = snapshot.docs
+          .map((doc) => ({id: doc.id, ...doc.data()}));
+      res.status(200).json(vehicles);
+    } catch (error) {
+      res.status(500).send(error.message);
+    }
+  });
+});
+
+export const getVehicle = onRequest(async (req, res) => {
+  corsHandler(req, res, async () => {
+    try {
+      const {id} = req.query;
+      const doc = await db.collection("vehicles").doc(id).get();
+      if (!doc.exists) {
+        res.status(404).send("Vehicle not found");
+      } else {
+        res.status(200).json({id: doc.id, ...doc.data()});
+      }
+    } catch (error) {
+      res.status(500).send(error.message);
+    }
+  });
+});
+
+export const updateVehicle = onRequest(async (req, res) => {
+  corsHandler(req, res, async () => {
+    try {
+      const {id} = req.query;
+      const updates = req.body;
+      await db.collection("vehicles").doc(id).update(updates);
+      res.status(200).json({id, ...updates});
+    } catch (error) {
+      res.status(500).send(error.message);
+    }
+  });
+});
+
+export const deleteVehicle = onRequest(async (req, res) => {
+  corsHandler(req, res, async () => {
+    try {
+      const {id} = req.query;
+      await db.collection("vehicles").doc(id).delete();
+      res.status(204).send();
+    } catch (error) {
+      res.status(500).send(error.message);
+    }
+  });
+});
