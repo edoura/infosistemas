@@ -1,8 +1,15 @@
-<app-register-vehicle></app-register-vehicle>
+<app-register-vehicle *ngIf="viewRegisterVehicle" (registerCompleted)="toggleRegisterVehicle()"></app-register-vehicle>
 
-<mat-card class="container-list">
+<mat-card class="container-list" [ngStyle]="{ 'margin-top': viewRegisterVehicle ? '16px' : '' }">
   <mat-card-content>
-    <h3>veículos</h3>
+    <div class="header">
+      <h3>veículos</h3>
+      <button mat-mini-fab color="primary" title="novo veículo" (click)="toggleRegisterVehicle()"
+        *ngIf="!viewRegisterVehicle"><mat-icon>add</mat-icon></button>
+      <button mat-mini-fab color="accent" title="cancelar cadastro" (click)="toggleRegisterVehicle()"
+        *ngIf="viewRegisterVehicle"><mat-icon>remove</mat-icon></button>
+    </div>
+
     <div class="desktop-view">
       <div class="list-header">
         <span><small>placa</small></span>
@@ -13,7 +20,7 @@
         <span><small>ano</small></span>
       </div>
       <mat-spinner *ngIf="loadingVehicles" [diameter]="35"></mat-spinner>
-      <div class="scroll">
+      <div class="scroll" [ngStyle]="{ 'max-height': viewRegisterVehicle ? '348px' : '518px' }">
         <mat-card class="vehicles-item" *ngFor="let vehicle of vehicles" (click)="viewVehicle(vehicle.id)">
           <mat-card-content>
             <span>{{ vehicle.plate }}</span>

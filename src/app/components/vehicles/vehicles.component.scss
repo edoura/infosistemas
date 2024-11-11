@@ -1,9 +1,18 @@
 .container-list {
-  margin-top: 16px;
   background-color: #f7f7f7;
 
-  h3 {
-    margin-top: 0.2em;
+  .header {
+    display: flex;
+
+    h3 {
+      margin-top: 0.2em;
+    }
+
+    button {
+      margin-left: 16px;
+      width: 30px;
+      height: 30px;
+    }
   }
 
   .desktop-view {
@@ -39,7 +48,6 @@
     }
 
     .scroll {
-      height: 348px;
       overflow-y: auto;
 
       &::-webkit-scrollbar {
