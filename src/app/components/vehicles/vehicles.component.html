@@ -1,3 +1,5 @@
+<app-register-vehicle></app-register-vehicle>
+
 <mat-card class="container-list">
   <mat-card-content>
     <h3>Veículos</h3>
@@ -9,15 +11,18 @@
       <span><small>renavam</small></span>
       <span><small>ano</small></span>
     </div>
-    <mat-card class="vehicles-list" *ngFor="let vehicle of vehicles">
-      <mat-card-content>
-        <span>{{ vehicle.plate }}</span>
-        <span>{{ vehicle.model }}</span>
-        <span>{{ vehicle.brand }}</span>
-        <span>{{ vehicle.chassis }}</span>
-        <span>{{ vehicle.renavam }}</span>
-        <span>{{ vehicle.year }}</span>
-      </mat-card-content>
-    </mat-card>
+    <mat-spinner *ngIf="loadingVehicles" [diameter]="35"></mat-spinner>
+    <div class="scroll">
+      <mat-card class="vehicles-item" *ngFor="let vehicle of vehicles" (click)="viewVehicle(vehicle.id)">
+        <mat-card-content>
+          <span>{{ vehicle.plate }}</span>
+          <span>{{ vehicle.model }}</span>
+          <span>{{ vehicle.brand }}</span>
+          <span>{{ vehicle.chassis }}</span>
+          <span>{{ vehicle.renavam }}</span>
+          <span>{{ vehicle.year }}</span>
+        </mat-card-content>
+      </mat-card>
+    </div>
   </mat-card-content>
 </mat-card>

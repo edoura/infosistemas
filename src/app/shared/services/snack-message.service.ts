@@ -23,7 +23,7 @@ export class SnackMessageService {
   alert(msg: string) {
     this.snackBar.open(msg, 'fechar', {
       duration: 3000,
-      panelClass: ['mat-accent'],
+      panelClass: ['mat-primary'],
     });
   }
 

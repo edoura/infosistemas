@@ -1,21 +1,39 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
-import { Vehicle } from '../models/vehicle.model';
+import { Vehicle } from '../models/vehicle.model'; // Defina o seu modelo de veículo
 
 @Injectable({
   providedIn: 'root'
 })
 export class VehicleService {
-  private readonly apiUrl = 'https://us-central1-infosistemas-2024.cloudfunctions.net';
 
-  constructor(private readonly http: HttpClient) { }
+  private readonly collectionName = 'vehicles';
 
-  createVehicle(vehicle: Vehicle): Observable<Vehicle> {
-    return this.http.post<Vehicle>(`${this.apiUrl}/createVehicle`, vehicle);
+  constructor(private readonly firestore: AngularFirestore) { }
+
+  // Método para obter todos os veículos
+  getVehicles(): Observable<Vehicle[]> {
+    return this.firestore.collection<Vehicle>(this.collectionName).valueChanges({ idField: 'id' });
   }
 
-  getVehicles(): Observable<Vehicle[]> {
-    return this.http.get<Vehicle[]>(`${this.apiUrl}/getVehicles`);
+  // Método para obter um veículo por ID
+  getVehicleById(id: string): Observable<Vehicle | undefined> {
+    return this.firestore.collection<Vehicle>(this.collectionName).doc(id).valueChanges();
+  }
+
+  // Método para adicionar um novo veículo
+  addVehicle(vehicle: Vehicle): Promise<any> {
+    return this.firestore.collection(this.collectionName).add(vehicle);
+  }
+
+  // Método para atualizar um veículo existente
+  updateVehicle(id: string, vehicle: Vehicle): Promise<void> {
+    return this.firestore.collection(this.collectionName).doc(id).update(vehicle);
+  }
+
+  // Método para deletar um veículo
+  deleteVehicle(id: string): Promise<void> {
+    return this.firestore.collection(this.collectionName).doc(id).delete();
   }
 }

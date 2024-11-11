@@ -2,11 +2,16 @@ import {expect} from "chai";
 import firebaseFunctionsTest from "firebase-functions-test";
 import * as functions from "../index.js";
 import admin from "firebase-admin";
+import cors from "cors";
+
+const mockCors = cors({origin: "*"});
 
 // initializing firebase admin only once
 if (admin.apps.length === 0) {
   admin.initializeApp();
 }
+
+process.env.NODE_ENV = "test";
 
 const testEnv = firebaseFunctionsTest();
 
@@ -38,7 +43,7 @@ describe("vehicle CRUD Operations", () => {
       }),
     };
 
-    await functions.createVehicle(req, res);
+    await functions.createVehicle(req, res, mockCors);
   });
 
   it("should get all vehicles", async () => {
@@ -52,7 +57,7 @@ describe("vehicle CRUD Operations", () => {
       }),
     };
 
-    await functions.getVehicles(req, res);
+    await functions.getVehicles(req, res, mockCors);
   });
 
   it("should get a vehicle by ID", async () => {
@@ -66,7 +71,7 @@ describe("vehicle CRUD Operations", () => {
       }),
     };
 
-    await functions.getVehicle(req, res);
+    await functions.getVehicle(req, res, mockCors);
   });
 
   it("should update a vehicle", async () => {
@@ -83,7 +88,7 @@ describe("vehicle CRUD Operations", () => {
       }),
     };
 
-    await functions.updateVehicle(req, res);
+    await functions.updateVehicle(req, res, mockCors);
   });
 
   it("should delete a vehicle", async () => {
@@ -97,6 +102,6 @@ describe("vehicle CRUD Operations", () => {
       },
     };
 
-    await functions.deleteVehicle(req, res);
+    await functions.deleteVehicle(req, res, mockCors);
   });
 });

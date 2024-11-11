@@ -4,7 +4,7 @@
     <form [formGroup]="vehicleForm" (ngSubmit)="onSubmit()">
       <div class="form-vehicle" fxLayout="row" fxLayout.lt-md="column" fxFlexFill>
 
-        <mat-form-field appearance="outline" fxFlex="8">
+        <mat-form-field appearance="outline" fxFlex="10">
           <mat-label>Placa</mat-label>
           <input matInput formControlName="plate" required maxlength="7" />
           <mat-error *ngIf="vehicleForm.controls['plate'].hasError('required')">obrigatório</mat-error>
@@ -13,9 +13,7 @@
         <mat-form-field appearance="outline" fxFlex="16">
           <mat-label>Chassi</mat-label>
           <input matInput formControlName="chassis" required maxlength="17" />
-          <mat-error *ngIf="vehicleForm.controls['chassis'].hasError('required')">
-            obrigatório.
-          </mat-error>
+          <mat-error *ngIf="vehicleForm.controls['chassis'].hasError('required')"> obrigatório.</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" fxFlex="12">
@@ -41,11 +39,11 @@
           <input matInput formControlName="year" type="text" required maxlength="4" [mask]="'0000'" />
           <mat-error *ngIf="vehicleForm.controls['year'].hasError('required')">obrigatório</mat-error>
           <mat-error *ngIf="vehicleForm.controls['year'].hasError('min')">deve ser maior que 1900</mat-error>
-          <mat-error *ngIf="vehicleForm.controls['year'].hasError('max')">deve ser menor que 2024</mat-error>
+          <mat-error *ngIf="vehicleForm.controls['year'].hasError('max')">deve ser menor que {{ yearToday }}</mat-error>
         </mat-form-field>
 
         <button mat-raised-button color="primary" type="submit" [disabled]="vehicleForm.invalid || loadingRegister">
-          <span *ngIf="!loadingRegister">Cadastrar</span>
+          <span *ngIf="!loadingRegister">cadastrar</span>
           <mat-spinner *ngIf="loadingRegister" [diameter]="20"></mat-spinner>
         </button>
       </div>

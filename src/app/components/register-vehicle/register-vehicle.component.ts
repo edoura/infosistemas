@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { SnackMessageService } from 'src/app/shared/services/snack-message.service';
-import { Vehicle } from '../../models/vehicle.model';
 import { VehicleService } from '../../services/vehicle.service';
+import { SnackMessageService } from '../../shared/services/snack-message.service';
+import { Vehicle } from '../../models/vehicle.model';
 
 @Component({
   selector: 'app-register-vehicle',
@@ -10,7 +10,9 @@ import { VehicleService } from '../../services/vehicle.service';
   styleUrls: ['./register-vehicle.component.scss']
 })
 export class RegisterVehicleComponent {
+
   vehicleForm: FormGroup;
+  yearToday = new Date().getFullYear();
   loadingRegister: boolean = false;
 
   constructor(
@@ -24,7 +26,7 @@ export class RegisterVehicleComponent {
       renavam: ['', [Validators.required, Validators.pattern('^[0-9]{11}$')]],
       model: ['', Validators.required],
       brand: ['', Validators.required],
-      year: ['', [Validators.required, Validators.min(1900), Validators.max(2024)]]
+      year: ['', [Validators.required, Validators.min(1900), Validators.max(this.yearToday)]]
     });
   }
 
@@ -41,21 +43,14 @@ export class RegisterVehicleComponent {
         brand: this.vehicleForm.value.brand.toUpperCase()
       };
 
-      this.vehicleService.createVehicle(vehicle).subscribe({
-        next: () => {
-          this.snackMessageService.alert('Veículo cadastrado com sucesso!');
-        },
-        error: () => {
-          this.snackMessageService.error('Erro ao cadastrar veículo');
-          this.loadingRegister = false;
-        },
-        complete: () => {
+      this.vehicleService.addVehicle(vehicle)
+        .then(() => this.snackMessageService.alert('Veículo cadastrado com sucesso!'))
+        .catch(() => this.snackMessageService.error('Erro ao cadastrar veículo'))
+        .finally(() => {
           this.loadingRegister = false
-
           this.vehicleForm.reset();
           this.resetFormState();
-        }
-      })
+        });
     }
   }
 
