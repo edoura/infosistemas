@@ -5,75 +5,20 @@
     margin-top: 0.2em;
   }
 
-  .list-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 18px 12px;
-
-    span {
-      text-align: center;
-      font-weight: bold;
-
-      &:nth-child(1) {
-        width: 68px;
-      }
-
-      &:nth-child(2),
-      &:nth-child(3),
-      &:nth-child(4),
-      &:nth-child(5) {
-        width: 178px;
-      }
-
-      &:nth-child(6) {
-        width: 36px;
-      }
-    }
-  }
-
-  mat-spinner {
-    margin: 6em auto;
-  }
-
-  .scroll {
-    height: 350px;
-    overflow-y: auto;
-
-    &::-webkit-scrollbar {
-      width: 12px;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background-color: #888;
-      border-radius: 10px;
-      border: 3px solid #fff;
-    }
-
-    &::-webkit-scrollbar-track {
-      background: #f1f1f1;
-      border-radius: 10px;
-    }
-
-    &::-webkit-scrollbar-track:hover {
-      background: #ddd;
-    }
-  }
-
-  mat-card.vehicles-item {
-    cursor: pointer;
-
-    &:not(:first-of-type) {
-      margin-top: 12px;
-    }
-
-    ::ng-deep mat-card-content {
+  .desktop-view {
+    .list-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      padding: 0 18px 12px;
 
       span {
         text-align: center;
+        font-weight: bold;
+
+        &:nth-child(1) {
+          width: 68px;
+        }
 
         &:nth-child(2),
         &:nth-child(3),
@@ -81,10 +26,104 @@
         &:nth-child(5) {
           width: 178px;
         }
+
+        &:nth-child(6) {
+          width: 36px;
+        }
       }
     }
-    &:last-of-type {
-      margin-bottom: 2px;
+
+    mat-spinner {
+      margin: 6em auto;
+    }
+
+    .scroll {
+      height: 348px;
+      overflow-y: auto;
+
+      &::-webkit-scrollbar {
+        width: 12px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: #888;
+        border-radius: 10px;
+        border: 3px solid #fff;
+      }
+
+      &::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 10px;
+      }
+
+      &::-webkit-scrollbar-track:hover {
+        background: #ddd;
+      }
+    }
+
+    mat-card.vehicles-item {
+      cursor: pointer;
+
+      &:not(:first-of-type) {
+        margin-top: 12px;
+      }
+
+      ::ng-deep mat-card-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        span {
+          text-align: center;
+
+          &:nth-child(2),
+          &:nth-child(3),
+          &:nth-child(4),
+          &:nth-child(5) {
+            width: 178px;
+          }
+        }
+      }
+      &:last-of-type {
+        margin-bottom: 2px;
+      }
+    }
+  }
+
+  .mobile-view {
+    display: none;
+  }
+
+  @media screen and (max-width: 599px) {
+    .desktop-view {
+      display: none;
+    }
+
+    .mobile-view {
+      display: block;
+      overflow: auto;
+      max-height: 570px;
+
+      mat-card.mobile-vehicle-list {
+        cursor: pointer;
+
+        &:not(:first-of-type) {
+          margin-top: 12px;
+        }
+
+        &:last-of-type {
+          margin-bottom: 2px;
+        }
+
+        .list-item-prop {
+          display: flex;
+          justify-content: space-between;
+
+          &:not(:first-of-type) {
+            margin-top: 8px;
+          }
+        }
+      }
     }
   }
 }
