@@ -20,7 +20,7 @@
         <span><small>ano</small></span>
       </div>
       <mat-spinner *ngIf="loadingVehicles" [diameter]="35"></mat-spinner>
-      <div class="scroll" [ngStyle]="{ 'max-height': viewRegisterVehicle ? '348px' : '518px' }">
+      <div class="scroll" [ngStyle]="{ 'max-height': viewRegisterVehicle ? 'calc(100vh - 306px)' : 'calc(100vh - 135px)' }">
         <mat-card class="vehicles-item" *ngFor="let vehicle of vehicles" (click)="viewVehicle(vehicle.id)">
           <mat-card-content>
             <span>{{ vehicle.plate }}</span>
